@@ -2,11 +2,6 @@
 % Extraversion function
 % *******************
 
-% estimateExtraversion(X, 'deep introversion'):-   isDeepIntroversion(X), !.
-% estimateExtraversion(X, 'common introversion'):- isIntroversion(X),     !.
-% estimateExtraversion(X, 'low introversion'):-    isLowIntroversion(X),  !.
-% estimateExtraversion(X, 'common extraversion'):- isExtraversion(X),     !.
-% estimateExtraversion(X, 'high extraversion'):-   isHighExtraversion(X), !.
 estimateExtraversion(X, 0):-   isDeepIntroversion(X), !.
 estimateExtraversion(X, 1):- isIntroversion(X),     !.
 estimateExtraversion(X, 2):-    isLowIntroversion(X),  !.
@@ -47,10 +42,6 @@ isHighExtraversion(X):- extHighExt(X, MuX), MuX > 0.5 .
 % Neuroticism function
 % *******************
 
-% estimateNeuroticism(Y, 'low'):-       isLowNeuroticism(Y),      !.
-% estimateNeuroticism(Y, 'average'):-   isAvgNeuroticism(Y),      !.
-% estimateNeuroticism(Y, 'high'):-      isHighNeuroticism(Y),     !.
-% estimateNeuroticism(Y, 'very high'):- isVeryHighNeuroticism(Y), !.
 estimateNeuroticism(Y, 0):-       isLowNeuroticism(Y),      !.
 estimateNeuroticism(Y, 1):-   isAvgNeuroticism(Y),      !.
 estimateNeuroticism(Y, 2):-      isHighNeuroticism(Y),     !.
@@ -86,8 +77,6 @@ isVeryHighNeuroticism(Y):- neuroVeryHigh(Y, MuY), MuY >= 0.5 .
 % Lie function
 % *******************
 
-% estimateLie(Z, 'low'):-  isLowLie(Z),  !.
-% estimateLie(Z, 'high'):- isHighLie(Z), !.
 estimateLie(Z, 0):-  isLowLie(Z),  !.
 estimateLie(Z, 1):- isHighLie(Z), !.
 
@@ -102,13 +91,8 @@ lieHigh(Z, MuZ):- Z >= 0, Z < 8, MuZ is Z / 8.
 isHighLie(Z):- lieHigh(Z, MuZ), MuZ > 0.5 .
 
 % *******************
-% 
+% Result
 % *******************
-
-% determineType(X, Y, 'Phlegmatic'):- estimateExtraversion(X, MuX), estimateNeuroticism(Y, MuY), MuX == 0; MuX == 1; MuX == 2, MuY ==0; MuY == 1.
-% determineType(X, Y, 'Melancholic'):- MuX == 0; MuX == 1; MuX == 2, MuY == 2; MuY == 3.
-% determineType(X, Y, 'Sanguine'):- MuX == 3; MuX == 4, MuY ==0; MuY == 1.
-% determineType(X, Y, 'Choleric'):- MuX == 3; MuX == 4, MuY ==2; MuY == 3.
 
 determineTypeWrapper(X, Y, R):- estimateExtraversion(X, MuX), estimateNeuroticism(Y, MuY), determineType(MuX, MuY, R).
 determineType(MuX, MuY, 'Phlegmatic'):- (MuX == 0; MuX == 1; MuX == 2), (MuY ==0; MuY == 1).

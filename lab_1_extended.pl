@@ -2,18 +2,18 @@
 % Extraversion function
 % *******************
 
-estimateExtraversion(X, 0):- isDeepIntroversion(X), !.
-estimateExtraversion(X, 1):- isIntroversion(X), !.
-estimateExtraversion(X, 2):- isLowIntroversion(X), !.
-estimateExtraversion(X, 3):- isExtraversion(X), !.
-estimateExtraversion(X, 4):- isHighExtraversion(X), !.
+estimateExtraversion(X, 0, M, Tg):- K is M - 2 / Tg, isDeepIntroversion(X, K, Tg), !.
+estimateExtraversion(X, 1, M, Tg):- K is M - 1 / Tg, isIntroversion(X, K, Tg), !.
+estimateExtraversion(X, 2, M, Tg):- isLowIntroversion(X, M, Tg), !.
+estimateExtraversion(X, 3, M, Tg):- K is M + 1 / Tg, isExtraversion(X, K, Tg), !.
+estimateExtraversion(X, 4, M, Tg):- K is M + 2 / Tg, isHighExtraversion(X, K, Tg), !.
 
 % 7 11 13 17 21
 % Deep Introversion   
-extDeepInt(X, 0):- X >= 11, !.
-extDeepInt(X, 1):- X >= 0, X < 7, !.
-extDeepInt(X, MuX):- X >= 7, X < 11, MuX is -((X - 7) / 4) + 1.
-isDeepIntroversion(X):- extDeepInt(X, MuX), MuX > 0.5 .
+extDeepInt(X, 0, M, Tg):- X >= M + 1 / Tg, !.
+extDeepInt(X, 1, M, Tg):- X >= 0, X < M, !.
+extDeepInt(X, MuX, M, Tg):- X >= M, X < M + 1 / Tg, MuX is -((X - (M - 1 / Tg)) / 2) + 1.
+isDeepIntroversion(X, M, Tg):- extDeepInt(X, MuX, M, Tg), MuX > 0.5 .
 
 % Introversion
 extInt(X, 0):- X >= 0, X < 7; X >= 13, !.

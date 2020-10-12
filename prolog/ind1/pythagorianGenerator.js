@@ -51,6 +51,7 @@ const generateTriplesUnderPerimeter = (p) => {
     let condition = true;
     while (condition) {
         while (n < m) {
+            console.log(m, n);
             if (m ** 2 + n ** 2 > p) {
                 condition = false;
                 break;

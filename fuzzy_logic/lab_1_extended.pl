@@ -42,7 +42,7 @@ estimateExtraversion(X, 0, M, Tg):- isFirstTerm(X, M - 2 / Tg, Tg), !.
 estimateExtraversion(X, 1, M, Tg):- isMiddleTerm(X, M - 1 / Tg, Tg), !.
 estimateExtraversion(X, 2, M, Tg):- isMiddleTermIn(X, M, Tg), !.
 estimateExtraversion(X, 3, M, Tg):- isMiddleTerm(X, M + 1 / Tg, Tg), !.
-estimateExtraversion(X, 4, M, Tg):- isLastTerm(X, M + 2 / Tg, Tg).
+estimateExtraversion(X, 4, M, Tg):- isLastTerm(X, M + 2 / Tg, Tg). 
 
 % *******************
 % Neuroticism function

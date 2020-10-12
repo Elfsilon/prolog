@@ -47,7 +47,7 @@ const getTriplesFromPrimitiveUnderPerimeter = (primitiveTriple, p) => {
 const generateTriplesUnderPerimeter = (p) => {
     const result = [];
     let m = 2;
-    let n = 1;
+    let n = 1; 
     let condition = true;
     while (condition) {
         while (n < m) {

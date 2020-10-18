@@ -2,7 +2,7 @@ from pyswip.prolog import Prolog
 import sqlite3
 
 def evalConfig():
-    conn = sqlite3.connect('fuzzy.db')
+    conn = sqlite3.connect('fuzzy_logic/ind2/fuzzy.db')
     c = conn.cursor()
     query_data = list(c.execute("SELECT extraversion, neurotisism, lie FROM test_results"))
     conn.close()

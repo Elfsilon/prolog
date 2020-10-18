@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect('fuzzy.db')
+conn = sqlite3.connect('fuzzy_logic/ind2/fuzzy.db')
 c = conn.cursor()
 
 types = {
@@ -41,9 +41,6 @@ c.execute('''
 for t in test_results:
     query = f"INSERT INTO test_results VALUES ({t['extraversion']}, {t['neurotisism']}, {t['lie']}, '{t['result']}')"
     c.execute(query)
+
 conn.commit()
-
-# for row in c.execute("SELECT rowid, extraversion, neurotisism, lie, result FROM test_results"):
-#     print(row)
-
 conn.close()

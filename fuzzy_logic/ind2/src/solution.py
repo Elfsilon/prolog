@@ -1,5 +1,5 @@
 import sqlite3
-from pyswip.prolog import Prolog as prolog
+from pyswip.prolog import Prolog
 import math
 import numpy as np
 
@@ -34,7 +34,8 @@ def evalConfig(data):
 
 def solve(x, y, z, config):
     query_string = f"result({x}, {config['mx']}, {config['tgx']}, {y}, {config['my']}, {config['tgy']}, {z}, {config['mz']}, {config['tgz']}, Res)"
-    prolog.consult("fuzzy_logic/ind2/src/fuzzy.pl") 
+    prolog = Prolog()
+    Prolog.consult("fuzzy_logic/ind2/src/fuzzy.pl") 
     solut = list(prolog.query(query_string))[0]['Res']
     return solut
 

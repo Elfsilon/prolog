@@ -2,9 +2,11 @@ from flask import Flask
 from db.database import Database
 import sqlite3
 import src.solution as sol
+from pyswip.prolog import Prolog
 
 app = Flask(__name__)
 db = Database()
+prolog = Prolog()
 
 @app.route('/')
 def get_results():
@@ -44,23 +46,30 @@ def remove(id):
         }
     return 'Remove from table'
 
-@app.route('/solution/<x>/<y>/<z>')
-def solution(x, y, z):
-    try:
-        query_data = db.select_all()
-        p_type = sol.get_solved(x, y, z, query_data)
-        return {
-            'status': True,
-            'message': 'Personality type',
-            'props': {
-                'data': p_type 
-            }
-        }
-    except:
-        return {
-            'status': False,
-            'message': 'Getting personality type failed'
-        }
+@app.route('/test')
+def test():
+    res = list(prolog.query("append([1], [2], Res)"))[0]['Res']
+    print(res)
+    return 'test'
+
+# @app.route('/solution/<x>/<y>/<z>')
+# def solution(x, y, z):
+#     try:
+#         query_data = db.select_all()
+#         p_type = sol.get_solved(x, y, z, query_data)
+#         print(p_type)
+#         return {
+#             'status': True,
+#             'message': 'Personality type',
+#             'props': {
+#                 'data': p_type 
+#             }
+#         }
+#     except:
+#         return {
+#             'status': False,
+#             'message': 'Getting personality type failed'
+#         }
 
 if __name__ == '__main__':
     app.run(debug = True)

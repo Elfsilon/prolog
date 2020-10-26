@@ -8,7 +8,7 @@ compress([H], CurChar, CurCount, Compressed, Result):-
     append(Compressed, NewPart, NewCompressed),
     text_to_string(NewCompressed, Result).
 
-compress([H], CurChar, CurCount, Compressed, NewCompressed2):-
+compress([H], CurChar, CurCount, Compressed, Result):-
     number_chars(CurCount, CharList1),
     append([CurChar], CharList1, NewPart1),
     append(Compressed, NewPart1, NewCompressed1),

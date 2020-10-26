@@ -49,6 +49,7 @@ def remove(id):
 @app.route('/test')
 def test():
     res = list(prolog.query("append([1], [2], Res)"))[0]['Res']
+
     print(res)
     return 'test'
 

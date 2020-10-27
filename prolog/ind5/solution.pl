@@ -12,3 +12,11 @@ write_file(File, X1, X2, X3, X4, X5):-
     Sum = 20,
     format(File, "x1 = ~d, x2 = ~d, x3 = ~d, x4 = ~d, x5 = ~d\n", [X1, X2, X3, X4, X5]).
 write_file(File, _, _, _, _, _):- !.
+
+brute_force():- brute_force(0, 0), !.
+brute_force(I, 817):- I1 is I + 1, brute_force(I1, 0).
+brute_force(817, J):- write("/nend"), !.
+brute_force(I, J):-
+    write("Итерация"),
+    J1 is J + 1,
+    brute_force(I, J1).

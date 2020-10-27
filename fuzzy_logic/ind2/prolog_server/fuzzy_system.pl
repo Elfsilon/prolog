@@ -70,5 +70,5 @@ determineType(MuX, MuY, 'Melancholic'):- (MuX == 0; MuX == 1; MuX == 2), (MuY ==
 determineType(MuX, MuY, 'Sanguine'):- (MuX == 3; MuX == 4), (MuY ==0; MuY == 1).
 determineType(MuX, MuY, 'Choleric'):- (MuX == 3; MuX == 4), (MuY ==2; MuY == 3).
 
-result(X, Mx, TgX, Y, My, TgY, Z, Mz, TgZ, R):- estimateLie(Z, MuZ, Mz, TgZ), MuZ == 0, determineTypeWrapper(X, Mx, TgX, Y, My, TgY, R), !.
-result(X, Mx, TgX, Y, My, TgY, Z, Mz, TgZ, S):- determineTypeWrapper(X, Mx, TgX, Y, My, TgY, R),  string_concat(R, ' (Result might be wrong)', S).
+detResult(X, Mx, TgX, Y, My, TgY, Z, Mz, TgZ, R):- estimateLie(Z, MuZ, Mz, TgZ), MuZ == 0, determineTypeWrapper(X, Mx, TgX, Y, My, TgY, R), !.
+detResult(X, Mx, TgX, Y, My, TgY, Z, Mz, TgZ, S):- determineTypeWrapper(X, Mx, TgX, Y, My, TgY, R),  string_concat(R, ' (Result might be wrong)', S).

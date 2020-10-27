@@ -1,7 +1,7 @@
 import sqlite3
 
 class Database:
-    def __init__(self, dbpath = 'fuzzy_logic/ind2/fuzzy.db'):
+    def __init__(self, dbpath = 'main_server/db/fuzzy.db'):
         self.connection = sqlite3.connect(dbpath, check_same_thread=False)
         self.cursor = self.connection.cursor()
 

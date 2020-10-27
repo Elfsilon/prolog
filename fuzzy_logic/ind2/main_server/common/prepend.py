@@ -1,10 +1,7 @@
-import sqlite3
-from pyswip.prolog import Prolog
-import math
 import numpy as np
 
 def evalConfig(data):
-    sum_e, sum_n, sum_l, sum_def_e, sum_def_n, sum_def_l = 0, 0, 0, 0, 0, 0
+    sum_e, sum_n, sum_l = 0, 0, 0
     t_len = len(data)
 
     lst_e = []
@@ -31,14 +28,3 @@ def evalConfig(data):
         'tgy': 1 / std_n,
         'tgz': 1 / std_l
     }
-
-def solve(x, y, z, config):
-    query_string = f"result({x}, {config['mx']}, {config['tgx']}, {y}, {config['my']}, {config['tgy']}, {z}, {config['mz']}, {config['tgz']}, Res)"
-    prolog = Prolog()
-    Prolog.consult("fuzzy_logic/ind2/src/fuzzy.pl") 
-    solut = list(prolog.query(query_string))[0]['Res']
-    return solut
-
-def get_solved(x, y, z, data):
-    config = evalConfig(data)
-    return solve(x, y, z, config)

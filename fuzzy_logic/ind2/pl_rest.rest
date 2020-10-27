@@ -1,0 +1,1 @@
+GET http://localhost:4040?x=13&y=15&z=2&mx=13&my=15&mz=4&tgx=0.5&tgy=0.5&tgz=0.5

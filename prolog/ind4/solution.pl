@@ -1,25 +1,20 @@
 in_list([El|_],El).
 in_list([_|T],El):-in_list(T,El).
 
-sprava_next(A,B,[C]):-fail.
-sprava_next(A,B,[A|[B|Tail]]).
-sprava_next(A,B,[_|List]):-sprava_next(A,B,List).
-% [leonid, city, _] [_, penza, city]
-
-set_penza().
-
-fill([_, City, _], [[_, _, City]|Tail]):- fill([_, City, _], Tail).
-fill(A, [A|Tail]).
-
-pr_ein:- 
-    Humans=[_,_,_,_,_],
-    in_list(Humans, [sergey, _, riga]),
-    in_list(Humans, [boris, riga, penza]),
-    in_list(Humans, [viktor, _, moscow]),
-    in_list(Humans, [viktor, lvov, _]),
-    in_list(Humans, [grigoriy, _, harkov]),
-    in_list(Humans, [leonid, _, _]),
-    % in_list(Humans, [_, penza, _]),
-    % from penza rides on byc from leonid city
-    fill([_, penza, _], Humans),
-	write(Humans), nl.
+pr_velo:- 
+    Velo=[_,_,_,_,_],
+    in_list(Velo, [serg, _, riga]),
+    in_list(Velo, [boris, riga, penza]),
+    in_list(Velo, [victor, lvov, mosc]),
+    in_list(Velo, [grig, _, harckov]),
+    in_list(Velo, [leonid, X, _]),
+    in_list(Velo, [_, penza, X]),
+    in_list(Velo, [_, _, lvov]),
+    in_list(Velo, [_, mosc, _]),
+    in_list(Velo, [_, harckov, _]),
+    not(in_list(Velo, [_, penza, penza])),
+    not(in_list(Velo, [_, riga, riga])),
+    not(in_list(Velo, [_, lvov, lvov])),
+    not(in_list(Velo, [_, harckov, harckov])),
+    not(in_list(Velo, [_, mosc, mosc])),
+    write(Velo).

@@ -9,13 +9,12 @@ import (
 
 // TestGauss ...
 func TestGauss() {
-	imgFile, _ := os.Open("assets/picture.jpg")
+	imgFile, _ := os.Open("assets/picture2.jpg")
 	defer imgFile.Close()
 
 	loadedImg, _ := jpeg.Decode(imgFile)
 	toBlur := grayscale.Gray(loadedImg, grayscale.ComputeAVG)
-
-	blur.GaussianBlur(toBlur, 7)
+	blur.GaussianBlur(toBlur, 3, 10)
 
 	f, _ := os.Create("trash/blur/gaussian.jpg")
 	options := jpeg.Options{Quality: 100}

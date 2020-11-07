@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	tests.TestGauss()
+	tests.TestGrad()
 }

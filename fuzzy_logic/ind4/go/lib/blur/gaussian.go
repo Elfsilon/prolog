@@ -5,29 +5,27 @@ import (
 	"math"
 )
 
-func gaussian1d(x, sigma, mu float64) float64 {
-	return math.Exp(-math.Pow((x-mu)/sigma, 2.0) / 2.0)
-	// return math.Exp(-0.5*(math.Pow((x-mean)/ratio, 2.0)+math.Pow((y-mean)/ratio, 2.0))) / (2 * math.Pi * ratio * ratio)
+func gaussian2d(x, y, mu, sigma float64) float64 {
+	return math.Exp(-(math.Pow(x-mu, 2)/sigma+math.Pow(y-mu, 2)/sigma)/2.0) / (2 * math.Pi * sigma * sigma)
 }
 
-func setupKernel(r int) [][]float64 {
-	var sum, sigma float64 = 0, float64(r) / 2
+func gaussian1d(x, sigma, mu float64) float64 {
+	return math.Exp(-math.Pow((x-mu)/sigma, 2.0)/2.0) / (math.Sqrt(2*math.Pi) * sigma)
+}
+
+func setupKernel(r int, sigma float64) [][]float64 {
+	var sum float64 = 0
 	var kerW int = 2*r + 1
-	kernel1d := make([]float64, kerW)
 	kernel2d := make([][]float64, kerW)
 	for i := range kernel2d {
 		kernel2d[i] = make([]float64, kerW)
 	}
 
-	// Building kernel 1D
-	for x := 0; x < kerW; x++ {
-		kernel1d[x] = gaussian1d(float64(x), sigma, float64(r))
-	}
-
 	// Building weight matrix of kernel 2D
 	for x := 0; x < kerW; x++ {
 		for y := 0; y < kerW; y++ {
-			kernel2d[x][y] = kernel1d[x] * kernel1d[y]
+			// kernel2d[x][y] = kernel1d[x] * kernel1d[y]
+			kernel2d[x][y] = gaussian2d(float64(x), float64(y), float64(r), sigma)
 			sum += kernel2d[x][y]
 		}
 	}
@@ -41,25 +39,30 @@ func setupKernel(r int) [][]float64 {
 	return kernel2d
 }
 
-func cropMatrix() {}
+func convolution(x, y, radius, width, height int, img *image.Gray, kernel [][]float64) float64 {
+	var sum float64 = 0
+	for xi := x - radius; xi < x+radius+1; xi++ {
+		for yi := y - radius; yi < y+radius+1; yi++ {
+			if xi >= 0 && xi < height && yi >= 0 && yi < width {
+				offset := img.PixOffset(yi, xi)
+				sum += float64(img.Pix[offset]) * kernel[xi-(x-radius)][yi-(y-radius)]
+			}
+		}
+	}
+	return sum
+}
 
 // GaussianBlur ...
-func GaussianBlur(img *image.Gray, radius int) {
+func GaussianBlur(img *image.Gray, radius int, sigma float64) {
 	b := img.Bounds()
 	width := b.Max.X
 	height := b.Max.Y
 
-	for i := radius; i < height-radius; i++ {
-		for j := radius; j < width-radius; j++ {
-			kernel := setupKernel(radius)
-			var center float64 = 0
-			for ii := i - radius; ii < i+radius+1; ii++ {
-				for jj := j - radius; jj < j+radius+1; jj++ {
-					offset := img.PixOffset(ii, jj)
-					center += float64(img.Pix[offset]) * kernel[ii-(i-radius)][jj-(j-radius)]
-				}
-			}
-			offset := img.PixOffset(i, j)
+	for i := 0; i < height; i++ {
+		for j := 0; j < width; j++ {
+			kernel := setupKernel(radius, sigma)
+			center := convolution(i, j, radius, width, height, img, kernel)
+			offset := img.PixOffset(j, i)
 			img.Pix[offset] = uint8(center)
 		}
 	}
